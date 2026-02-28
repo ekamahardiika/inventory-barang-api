@@ -68,9 +68,12 @@ async function userController(req: AuthRequest, res: Response) {
     try {
         const user = await getCurrentUser(req.user);
 
+        const token = req.cookies.refreshToken
+
         res.status(200).json({
             message: "Current user",
-            data: user
+            data: user,
+            token: token
         });
 
     } catch (error) {
