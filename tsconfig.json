@@ -60,6 +60,7 @@
     },
     "exclude": [
       "prisma.config.ts",
-      "node_modules"
+      "node_modules",
+      "generated"
     ]
 }

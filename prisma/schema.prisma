@@ -5,10 +5,74 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
+  // output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+  role Role @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  transactions Transaction[]
+}
+
+model Product {
+  id String @id @default(uuid())
+  name String
+  hargaJual Int
+  hargaBeli Int
+  stok Int
+  categoryId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  category Category @relation(fields: [categoryId], references: [id])
+  items    TransactionItem[]
+}
+
+model Category {
+  id        String @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  products Product[]
+}
+
+model Transaction {
+  id String @id @default(uuid())
+  total Int
+  bayar Int
+  kembalian Int
+  userId String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  items TransactionItem[]
+}
+
+model TransactionItem {
+  id            Int @id @default(autoincrement())
+  qty           Int
+  harga         Int
+  subtotal      Int
+  transactionId String
+  productId     String
+
+  transaction Transaction @relation(fields: [transactionId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
 }
