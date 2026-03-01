@@ -5,7 +5,9 @@ type AppErrorKey =
   | "NO_USER"
   | "USER_EXIST"
   | "NO_CREDENTIALS"
-  | "INVALID_CREDENTIALS";
+  | "INVALID_CREDENTIALS"
+  | "CATEGORY_NOT_EXIST"
+  | "PRODUCT_NOT_EXIST";
 
 const errorMap: Record<
   AppErrorKey,
@@ -31,6 +33,15 @@ const errorMap: Record<
     status: 401,
     message: "Invalid email or password",
   },
+  CATEGORY_NOT_EXIST: {
+    status: 404,
+    message: "Category not found",
+  },
+  PRODUCT_NOT_EXIST: {
+    status: 404,
+    message: "Product not found",
+  }
+
 };
 
 export function errorHandler(error: unknown, res: Response) {

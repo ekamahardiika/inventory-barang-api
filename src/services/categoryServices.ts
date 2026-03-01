@@ -1,10 +1,5 @@
 import { prisma } from "../utils/prisma";
 
-// type CategoryInput = {
-//     id?: string;
-//     name?: string;
-// }
-
 async function getAllCategories(){
     const categories = await prisma.category.findMany();
     return categories;
