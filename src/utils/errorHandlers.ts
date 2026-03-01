@@ -7,7 +7,9 @@ type AppErrorKey =
   | "NO_CREDENTIALS"
   | "INVALID_CREDENTIALS"
   | "CATEGORY_NOT_EXIST"
-  | "PRODUCT_NOT_EXIST";
+  | "PRODUCT_NOT_EXIST"
+  | "UANG_TIDAK_CUKUP"
+  | "STOK_TIDAK_CUKUP";
 
 const errorMap: Record<
   AppErrorKey,
@@ -40,8 +42,15 @@ const errorMap: Record<
   PRODUCT_NOT_EXIST: {
     status: 404,
     message: "Product not found",
+  },
+  STOK_TIDAK_CUKUP: {
+    status: 404,
+    message: "Stok tidak cukup",
+  },
+  UANG_TIDAK_CUKUP: {
+    status: 404,
+    message: "Uang tidak cukup",
   }
-
 };
 
 export function errorHandler(error: unknown, res: Response) {
