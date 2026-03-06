@@ -5,6 +5,7 @@ import userRoutes from './routes/userRoutes';
 import categoryRoutes from './routes/categoryRoutes';
 import productRoutes from './routes/productRoutes';
 import transactionRoutes from './routes/transactionRoutes';
+import reportRoutes from './routes/reportRoutes';
 
 const app = express();
 
@@ -17,5 +18,6 @@ app.use('/users', userRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/products', productRoutes);
 app.use('/transaction', transactionRoutes);
+app.use('/reports', reportRoutes);
 
 export default app;

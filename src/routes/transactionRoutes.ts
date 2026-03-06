@@ -9,7 +9,7 @@ router.use(authMiddleware)
 
 //Route
 router.get('/', roleMiddlewares("ADMIN"), getAllTransactionController)
-router.get('/', roleMiddlewares("ADMIN"), getTransactionByIdController)
+router.get('/:id', roleMiddlewares("ADMIN"), getTransactionByIdController)
 router.post('/', roleMiddlewares("ADMIN"), createTransactionController)
 router.get('/', roleMiddlewares("USER"), transactionByUserController)
 
