@@ -4,7 +4,8 @@ import {
     getProductByIdController,
     createProductController,
     deleteProductController,
-    updateProductController
+    updateProductController,
+    updateProductStockController
  } from "../controllers/productControllers";
 import authMiddleware from "../middlewares/authMiddlewares";
 import { roleMiddlewares } from "../middlewares/roleMiddlewares";
@@ -20,5 +21,6 @@ router.get('/:id', roleMiddlewares("ADMIN"), getProductByIdController);
 router.post('/', roleMiddlewares("ADMIN"), createProductController);
 router.delete('/:id', roleMiddlewares("ADMIN"), deleteProductController);
 router.put('/:id', roleMiddlewares("ADMIN"), updateProductController);
+router.patch('/:id/stok', roleMiddlewares("ADMIN"), updateProductStockController);
 
 export default router;

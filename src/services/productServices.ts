@@ -125,12 +125,41 @@ async function updateProduct(id: string, data: ProductInput){
     return updateProduct;
 }
 
+async function updateStockProduct(id: string, stok: number){
+
+    if(stok === undefined || stok === null || stok < 0){
+        throw new Error("INVALID_CREDENTIALS")
+    }
+
+    const findProduct = await prisma.product.findUnique({
+        where: {
+            id: id
+        }
+    })
+
+    if(!findProduct){
+        throw new Error("PRODUCT_NOT_EXIST");
+    }
+
+    const updateStock = await prisma.product.update({
+        where: {
+            id: id
+        },
+        data: {
+            stok: stok
+        }
+    })
+
+    return updateStock;
+}
+
 export {
     getAllProducts,
     getProductById,
     createProduct,
     deleteProduct,
-    updateProduct
+    updateProduct,
+    updateStockProduct
 }
 
 

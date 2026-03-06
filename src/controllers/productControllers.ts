@@ -5,7 +5,8 @@ import {
     getProductById,
     createProduct,
     deleteProduct,
-    updateProduct
+    updateProduct, 
+    updateStockProduct
  } from "../services/productServices";
 
 async function getAllProductsController(req: Request, res: Response){
@@ -104,10 +105,33 @@ async function updateProductController(req: Request, res: Response){
     }
 }
 
+async function updateProductStockController(req: Request, res: Response){
+    try {
+
+        const { id } = req.params;
+
+        if (typeof id !== "string") {
+            return res.status(400).json({
+                message: "ID must String"
+            })
+        }
+
+        const product = await updateStockProduct(id, req.body)
+        res.status(201).json({
+            message: "Update Success",
+            data: product
+        })
+        
+    } catch (error) {
+        errorHandler(error, res)
+    }
+}
+
 export {
     getAllProductsController,
     getProductByIdController,
     createProductController,
     deleteProductController,
-    updateProductController
+    updateProductController,
+    updateProductStockController
 }

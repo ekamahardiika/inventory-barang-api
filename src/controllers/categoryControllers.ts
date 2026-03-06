@@ -3,6 +3,7 @@ import { errorHandler } from "../utils/errorHandlers";
 import { 
     getAllCategories,
     getCategoryById,
+    getProductByCategory,
     createCategory,
     deleteCategory,
     updateCategory
@@ -36,6 +37,27 @@ async function getAllCategoryByIdController(req: Request, res: Response){
         res.status(200).json({
             message: "Success",
             data: category
+        })
+
+    } catch (error) {
+        errorHandler(error, res)
+    }
+}
+
+async function getProductByCategoryController(req: Request, res: Response){
+    try {
+        const { id } = req.params;
+
+        if (typeof id !== "string") {
+            return res.status(400).json({
+                message: "ID must String"
+            })
+        }
+
+        const products = await getProductByCategory(id)
+        res.status(200).json({
+            message: "Success",
+            data: products
         })
 
     } catch (error) {
@@ -107,6 +129,7 @@ async function updateCategoryController(req: Request, res: Response){
 export {
     getAllCategoriesController,
     getAllCategoryByIdController,
+    getProductByCategoryController,
     createCategoryController,
     deleteCategoryController,
     updateCategoryController

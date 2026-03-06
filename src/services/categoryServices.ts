@@ -14,6 +14,16 @@ async function getCategoryById(id: string){
     return category;
 }
 
+async function getProductByCategory(categoryId: string){
+    const products = await prisma.product.findMany({
+        where: {
+            categoryId: categoryId
+        }
+    })
+
+    return products;
+}
+
 async function createCategory(name: string){
 
     if(!name){
@@ -91,6 +101,7 @@ async function updateCategory(id: string, name: string){
 export {
     getAllCategories,
     getCategoryById,
+    getProductByCategory,
     createCategory,
     deleteCategory,
     updateCategory
