@@ -5,6 +5,31 @@ interface TransactionItemInput {
     qty: number;
 }
 
+async function getAllTransaction(){
+    const transactions = await prisma.transaction.findMany();
+    return transactions;
+}
+
+async function getTransactionById(id: string){
+    const transaction = await prisma.transaction.findUnique({
+        where: {
+            id: id
+        }
+    })
+
+    return transaction;
+}
+
+async function transactionByUser(){
+    const transactions = await prisma.user.findMany({
+        select: {
+            transactions: true
+        }
+    })
+
+    return transactions;
+}
+
 async function createTransaction(
     userId: string,
     bayar: number,
@@ -94,4 +119,6 @@ async function createTransaction(
     })
 }
 
-export { createTransaction }
+
+
+export { getAllTransaction, getTransactionById, transactionByUser, createTransaction }

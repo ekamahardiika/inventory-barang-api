@@ -7,6 +7,7 @@ import {
     updateProductController
  } from "../controllers/productControllers";
 import authMiddleware from "../middlewares/authMiddlewares";
+import { roleMiddlewares } from "../middlewares/roleMiddlewares";
 
 const router = Router();
 
@@ -14,10 +15,10 @@ const router = Router();
 router.use(authMiddleware)
 
 //Routes
-router.get('/', getAllProductsController);
-router.get('/:id', getProductByIdController);
-router.post('/', createProductController);
-router.delete('/:id', deleteProductController);
-router.put('/:id', updateProductController);
+router.get('/', roleMiddlewares("ADMIN"), getAllProductsController);
+router.get('/:id', roleMiddlewares("ADMIN"), getProductByIdController);
+router.post('/', roleMiddlewares("ADMIN"), createProductController);
+router.delete('/:id', roleMiddlewares("ADMIN"), deleteProductController);
+router.put('/:id', roleMiddlewares("ADMIN"), updateProductController);
 
 export default router;

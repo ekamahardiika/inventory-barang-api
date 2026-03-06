@@ -6,12 +6,12 @@ interface AuthUser {
 }
 
 interface UserRequest extends Request {
-    user: AuthUser
+    user?: AuthUser
 }
 
 function roleMiddlewares(role: "ADMIN" | "USER"){
     return (req: UserRequest, res: Response, next: NextFunction) => {
-        if(req.user.role !== role ){
+        if(!req.user || req.user.role !== role ){
             res.status(401).json({
                 message: "Unauthorized"
             })
