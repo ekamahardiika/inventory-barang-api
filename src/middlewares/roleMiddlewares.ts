@@ -15,6 +15,7 @@ function roleMiddlewares(role: "ADMIN" | "USER"){
             res.status(401).json({
                 message: "Unauthorized"
             })
+            return
         } 
         next()
     }

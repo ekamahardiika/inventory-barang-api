@@ -115,8 +115,8 @@ async function updateProductStockController(req: Request, res: Response){
                 message: "ID must String"
             })
         }
-
-        const product = await updateStockProduct(id, req.body)
+        const {stok} = req.body
+        const product = await updateStockProduct(id, stok)
         res.status(201).json({
             message: "Update Success",
             data: product

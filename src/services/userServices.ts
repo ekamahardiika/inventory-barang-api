@@ -20,7 +20,7 @@ async function createUser(name: string,
   password: string,
   role: "ADMIN" | "USER"){
 
-    if(!name || !email || !password || role){
+    if(!name || !email || !password || !role){
         throw new Error("INVALID_CREDENTIALS")
     }
 
@@ -73,7 +73,7 @@ async function updateUser(
   password: string,
   role: "ADMIN" | "USER"){
 
-    if(!name || !password || role){
+    if(!name || !password || !role){
         throw new Error("INVALID_CREDENTIALS")
     }
 

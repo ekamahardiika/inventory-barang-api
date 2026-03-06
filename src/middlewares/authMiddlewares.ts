@@ -26,7 +26,8 @@ async function authMiddleware(req: AuthRequest, res: Response, next: NextFunctio
                 id: true,
                 name: true,
                 email: true,
-                password: true
+                // password: true,
+                role: true
             }
         })
 

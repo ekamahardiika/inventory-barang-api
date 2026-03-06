@@ -21,6 +21,6 @@ router.get('/:id', roleMiddlewares("ADMIN"), getAllCategoryByIdController);
 router.post('/', roleMiddlewares("ADMIN"), createCategoryController);
 router.delete('/:id', roleMiddlewares("ADMIN"), deleteCategoryController);
 router.put('/:id', roleMiddlewares("ADMIN"), updateCategoryController);
-router.put('/:id/products', roleMiddlewares("ADMIN"), getProductByCategoryController);
+router.get('/:id/products', roleMiddlewares("ADMIN"), getProductByCategoryController);
 
 export default router;

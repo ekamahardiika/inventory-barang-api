@@ -8,7 +8,7 @@ async function getAllTransactionController(req: Request, res: Response){
         const transaction = await getAllTransaction();
 
         res.status(200).json({
-            message: "Create Success",
+            message: "Success",
             data: transaction
         })
     } catch (error) {
@@ -30,7 +30,7 @@ async function getTransactionByIdController(req: Request, res: Response){
         const transaction = await getTransactionById(id);
 
         res.status(200).json({
-            message: "Create Success",
+            message: "Success",
             data: transaction
         })
     } catch (error) {
@@ -44,7 +44,7 @@ async function transactionByUserController(req: Request, res: Response){
         const transaction = await transactionByUser();
 
         res.status(200).json({
-            message: "Create Success",
+            message: "Success",
             data: transaction
         })
     } catch (error) {
