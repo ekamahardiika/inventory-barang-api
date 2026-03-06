@@ -1,184 +1,276 @@
-# Inventory Barang API
+# 🛒 POS Backend API
 
-A simple RESTful backend API for inventory management (products, categories, users, transactions, reports).
+> REST API sederhana untuk Point of Sale (POS) — dibuat sebagai project pembelajaran backend development.
 
-## Quick Overview
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 
-- **Stack**: Node.js + TypeScript + Express + Prisma (Postgres compatible)
-- **Auth**: JWT-based authentication
+---
 
-## API Table (summary)
+## 📌 Tentang Project
 
-| Endpoint | Method | Auth | Description |
-|---|---:|---:|---|
-| /api/v1/auth/register | POST | No | Register new user (email, password, role) |
-| /api/v1/auth/login | POST | No | Login — returns JWT |
-| /api/v1/products | GET | Optional/Yes | List products (query: page, limit, search) |
-| /api/v1/products | POST | Yes | Create product |
-| /api/v1/products/:id | GET | Optional/Yes | Get single product |
-| /api/v1/products/:id | PUT | Yes | Update product |
-| /api/v1/products/:id | DELETE | Yes (admin) | Delete product |
-| /api/v1/categories | GET | Optional/Yes | List categories |
-| /api/v1/transactions | POST | Yes | Create transaction (stock out/in) |
-| /api/v1/reports | GET | Yes | Generate basic inventory reports |
-| /api/v1/users | GET | Yes (admin) | List users |
+**POS Backend API** adalah REST API yang mensimulasikan sistem kasir sederhana. Project ini dibangun untuk memperdalam pemahaman tentang backend development, mulai dari autentikasi, manajemen data, hingga pembuatan laporan penjualan.
 
-> Note: Replace `Yes` with required JWT if the endpoint is protected. Roles (e.g., `admin`) may be required for destructive actions.
+### Fitur Utama
 
-## Example Request & Response
+| Fitur | Deskripsi |
+|---|---|
+| 🔐 Authentication | Register & login dengan JWT |
+| 👤 User Management | Kelola data pengguna |
+| 🏷️ Category Management | Kategori produk (CRUD) |
+| 📦 Product Management | Produk dengan stok & harga (CRUD) |
+| 🧾 Transactions | Proses transaksi & hitung kembalian |
+| 📊 Sales Reports | Laporan harian, bulanan, tahunan & top produk |
 
-Example: successful login response
+---
 
-```json
-{
-  "success": true,
-  "message": "Login successful",
-  "data": {
-    "user": {
-      "id": 1,
-      "name": "Admin",
-      "email": "admin@example.com",
-      "role": "admin"
-    },
-    "token": "eyJhbGciOi..."
-  }
-}
+## 🛠️ Tech Stack
+
+- **Runtime**: Node.js
+- **Framework**: Express.js
+- **Language**: TypeScript
+- **ORM**: Prisma
+- **Database**: PostgreSQL
+- **Auth**: JWT (JSON Web Token)
+- **API Testing**: Postman
+
+---
+
+## 🚀 Installation
+
+### 1. Clone repository
+
+```bash
+git clone https://github.com/username/pos-backend-api.git
 ```
 
-Example: listing products
+### 2. Masuk ke folder project
 
-```json
-{
-  "success": true,
-  "data": {
-    "items": [
-      {
-        "id": 42,
-        "name": "Product A",
-        "sku": "SKU-123",
-        "price": 120000,
-        "stock": 15,
-        "categoryId": 3
-      }
-    ],
-    "meta": {
-      "page": 1,
-      "limit": 20,
-      "total": 132
-    }
-  }
-}
+```bash
+cd pos-backend-api
 ```
 
-Example: error response
-
-```json
-{
-  "success": false,
-  "message": "Unauthorized",
-  "errors": ["Invalid token"]
-}
-```
-
-## Folder Structure
-
-```
-package.json
-prisma.config.ts
-tsconfig.json
-prisma/
-  schema.prisma
-  migrations/
-src/
-  app.ts
-  server.ts
-  controllers/
-    authControllers.ts
-    categoryControllers.ts
-    productControllers.ts
-    reportControllers.ts
-    transactionController.ts
-    userControllers.ts
-  middlewares/
-    authMiddlewares.ts
-    roleMiddlewares.ts
-  routes/
-    authRoutes.ts
-    categoryRoutes.ts
-    productRoutes.ts
-    reportRoutes.ts
-    transactionRoutes.ts
-    userRoutes.ts
-  services/
-    authServices.ts
-    categoryServices.ts
-    productServices.ts
-    reportServices.ts
-    transactionService.ts
-    userServices.ts
-  utils/
-    errorHandlers.ts
-    hash.ts
-    prisma.ts
-    token.ts
-```
-
-## Environment variables
-
-Create a `.env` file at project root. Common env keys expected:
-
-- `DATABASE_URL` — Postgres connection string for Prisma
-- `PORT` — server port (e.g. `3000`)
-- `JWT_SECRET` — secret used for signing tokens
-
-## Setup & Run (step-by-step)
-
-1. Install dependencies
+### 3. Install dependencies
 
 ```bash
 npm install
 ```
 
-2. Create `.env` from template (or set environment variables)
+### 4. Setup environment variable
 
-```bash
-copy .env.example .env   # Windows (Powershell)
-# cp .env.example .env  # macOS / Linux
+Buat file `.env` di root project:
+
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/pos_db"
+JWT_SECRET="your_secret_key"
 ```
 
-3. Set `DATABASE_URL` in `.env` to point to your database
-
-4. Run Prisma migrations (development)
+### 5. Run database migration
 
 ```bash
-npx prisma migrate dev --name init
-npx prisma generate
+npx prisma migrate dev
 ```
 
-5. Start the dev server
+### 6. Jalankan server
 
 ```bash
 npm run dev
 ```
 
-6. Build & start (production)
-
-```bash
-npm run build
-npm start
-```
-
-## Useful Commands
-
-- `npx prisma studio` — open Prisma Studio (DB browser)
-- `npx prisma migrate status` — check migrations status
-
-## Notes & Next Steps
-
-- Adjust `.env` values for your environment.
-- Add Postman / OpenAPI spec if you want interactive API docs.
-- Consider adding tests and CI for migrations + linting.
+Server akan berjalan di **`http://localhost:3000`** ✅
 
 ---
 
-If you'd like, I can also generate a Postman collection or an OpenAPI (Swagger) spec from the routes. Want me to add that?
+## 🔐 Authentication
+
+Beberapa endpoint memerlukan JWT Token. Tambahkan header berikut pada setiap request yang membutuhkan autentikasi:
+
+```
+Authorization: Bearer YOUR_TOKEN
+```
+
+---
+
+## 📡 API Endpoints
+
+### Auth
+
+#### Register
+```
+POST /auth/register
+```
+```json
+{
+  "name": "Victor",
+  "email": "victor@email.com",
+  "password": "123456"
+}
+```
+
+#### Login
+```
+POST /auth/login
+```
+```json
+{
+  "email": "victor@email.com",
+  "password": "123456"
+}
+```
+**Response:**
+```json
+{
+  "token": "JWT_TOKEN"
+}
+```
+
+---
+
+### Users
+
+| Method | Endpoint | Deskripsi |
+|---|---|---|
+| `GET` | `/users` | Get semua user |
+| `GET` | `/users/:id` | Get user by ID |
+
+---
+
+### Categories
+
+| Method | Endpoint | Deskripsi |
+|---|---|---|
+| `POST` | `/categories` | Buat kategori baru |
+| `GET` | `/categories` | Get semua kategori |
+| `PATCH` | `/categories/:id` | Update kategori |
+| `DELETE` | `/categories/:id` | Hapus kategori |
+
+#### Create / Update Category — Request Body
+```json
+{
+  "name": "Food"
+}
+```
+
+---
+
+### Products
+
+| Method | Endpoint | Deskripsi |
+|---|---|---|
+| `POST` | `/products` | Buat produk baru |
+| `GET` | `/products` | Get semua produk |
+| `GET` | `/products/:id` | Get produk by ID |
+| `PATCH` | `/products/:id` | Update produk |
+| `DELETE` | `/products/:id` | Hapus produk |
+
+#### Create Product — Request Body
+```json
+{
+  "name": "Indomie",
+  "hargaJual": 3500,
+  "hargaBeli": 2500,
+  "stok": 100,
+  "categoryId": "uuid-category"
+}
+```
+
+#### Update Product — Request Body
+```json
+{
+  "name": "Indomie Goreng",
+  "hargaJual": 4000,
+  "stok": 80
+}
+```
+
+---
+
+### Transactions
+
+| Method | Endpoint | Deskripsi |
+|---|---|---|
+| `POST` | `/transactions` | Buat transaksi baru |
+| `GET` | `/transactions` | Get semua transaksi |
+| `GET` | `/transactions/:id` | Get detail transaksi |
+
+#### Create Transaction — Request Body
+```json
+{
+  "bayar": 50000,
+  "items": [
+    { "productId": "uuid-product", "qty": 2 },
+    { "productId": "uuid-product-2", "qty": 1 }
+  ]
+}
+```
+
+**Response:**
+```json
+{
+  "total": 35000,
+  "bayar": 50000,
+  "kembalian": 15000
+}
+```
+
+---
+
+### Reports
+
+| Method | Endpoint | Deskripsi |
+|---|---|---|
+| `GET` | `/reports/daily` | Laporan transaksi hari ini |
+| `GET` | `/reports/monthly` | Laporan transaksi bulan ini |
+| `GET` | `/reports/yearly` | Laporan transaksi tahun ini |
+| `GET` | `/reports/top-products` | Produk paling banyak terjual |
+| `GET` | `/reports/low-stock` | Produk dengan stok rendah |
+
+#### Daily Report — Response
+```json
+{
+  "totalTransactions": 8,
+  "totalRevenue": 240000,
+  "totalItems": 17
+}
+```
+
+#### Top Products — Response
+```json
+[
+  {
+    "productName": "Indomie",
+    "totalSold": 120
+  }
+]
+```
+
+---
+
+## 🧪 Testing
+
+API dapat diuji menggunakan salah satu tool berikut:
+
+- [Postman](https://www.postman.com/)
+- [Thunder Client](https://www.thunderclient.com/) *(VS Code Extension)*
+- [Insomnia](https://insomnia.rest/)
+
+---
+
+## 🔮 Future Improvements
+
+Beberapa fitur yang direncanakan untuk dikembangkan ke depannya:
+
+- [ ] Pagination & Search / Filtering
+- [ ] Profit Report
+- [ ] Dashboard Analytics
+- [ ] Unit Testing
+- [ ] Docker Support
+
+---
+
+## 📄 License
+
+Project ini dibuat untuk keperluan pembelajaran. Feel free to use & modify. 🙌
